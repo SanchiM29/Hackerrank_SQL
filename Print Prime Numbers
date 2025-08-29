@@ -1,0 +1,13 @@
+WITH Numbers AS (
+    SELECT 2 AS n
+    UNION ALL
+    SELECT n + 1 FROM Numbers WHERE n < 1000
+)
+SELECT STRING_AGG(CAST(n AS VARCHAR), '&')
+FROM Numbers
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM Numbers AS d
+    WHERE d.n <= SQRT(Numbers.n) AND Numbers.n % d.n = 0 AND d.n > 1
+)
+OPTION (MAXRECURSION 1000);
