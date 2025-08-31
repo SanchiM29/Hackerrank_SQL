@@ -1,0 +1,9 @@
+SELECT f1.X, f1.Y
+FROM Functions f1
+JOIN Functions f2
+  ON f1.X = f2.Y
+ AND f1.Y = f2.X
+GROUP BY f1.X, f1.Y
+HAVING f1.X < f1.Y               -- normal symmetric pairs
+    OR (f1.X = f1.Y AND COUNT(*) > 1) -- allow duplicates like (20,20)
+ORDER BY f1.X;
